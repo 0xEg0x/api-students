@@ -10,7 +10,7 @@ Content-Type: application/json
 
 {
   "Name": "Lucas121",
-  "CPE": 12345,
+  "CPF": 12345,
   "Email": "lucas@test.com1",
   "Age": 24,
   "Active": true
