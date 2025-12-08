@@ -1,0 +1,25 @@
+### GET
+GET http://localhost:8080/students
+
+### GET BY ID
+GET http://localhost:8080/students/1
+
+### POST
+POST http://localhost:8080/users
+Content-Type: application/json
+
+{
+  "name": "Lucas",
+  "email": "lucas@test.com"
+}
+
+### PUT
+PUT http://localhost:8080/users/1
+Content-Type: application/json
+
+{
+  "name": "Lucas Atualizado"
+}
+
+### DELETE
+DELETE http://localhost:8080/users/1

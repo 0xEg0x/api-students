@@ -2,6 +2,7 @@ package main
 
 import (
 	"errors"
+	"fmt"
 	"log/slog"
 	"net/http"
 
@@ -18,7 +19,11 @@ func main() {
 	e.Use(middleware.Recover())
 
 	// Routes
-	e.GET("/students", getStudent)
+	e.GET("/students", getStudents)
+	e.GET("/students/:id", getStudent)
+	e.POST("/students", createStudent)
+	e.PUT("/students/:id", updateStudent)
+	e.DELETE("/students/:id", deleteStudent)
 
 	// Start server
 	if err := e.Start(":8080"); err != nil && !errors.Is(err, http.ErrServerClosed) {
@@ -27,6 +32,30 @@ func main() {
 }
 
 // Handler
-func getStudent(c echo.Context) error {
+func getStudents(c echo.Context) error {
 	return c.String(http.StatusOK, "List of all students!")
+}
+
+func getStudent(c echo.Context) error {
+	id := c.Param("id")
+	getStud := fmt.Sprintf("GET %s student", id)
+	return c.String(http.StatusOK, getStud)
+}
+
+func createStudent(c echo.Context) error {
+	id := c.Param("id")
+	creatStud := fmt.Sprintf("POST %s student", id)
+	return c.String(http.StatusOK, creatStud)
+}
+
+func updateStudent(c echo.Context) error {
+	id := c.Param("id")
+	updateStud := fmt.Sprintf("UPDATE %s student", id)
+	return c.String(http.StatusOK, updateStud)
+}
+
+func deleteStudent(c echo.Context) error {
+	id := c.Param("id")
+	deleteStud := fmt.Sprintf("DELETE %s student", id)
+	return c.String(http.StatusOK, deleteStud)
 }
