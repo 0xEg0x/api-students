@@ -6,6 +6,7 @@ import (
 	"log/slog"
 	"net/http"
 
+	"github.com/0xEg0x/api-students/db"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
@@ -43,9 +44,12 @@ func getStudent(c echo.Context) error {
 }
 
 func createStudent(c echo.Context) error {
-	id := c.Param("id")
-	creatStud := fmt.Sprintf("POST %s student", id)
-	return c.String(http.StatusOK, creatStud)
+	student := db.Student{}
+	if err := c.Bind(&student); err != nil {
+		return err
+	}
+	db.AddStudente(student)
+	return c.String(http.StatusOK, "create student")
 }
 
 func updateStudent(c echo.Context) error {

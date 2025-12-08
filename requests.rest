@@ -5,12 +5,15 @@ GET http://localhost:8080/students
 GET http://localhost:8080/students/1
 
 ### POST
-POST http://localhost:8080/users
+POST http://localhost:8080/students
 Content-Type: application/json
 
 {
-  "name": "Lucas",
-  "email": "lucas@test.com"
+  "Name": "Lucas121",
+  "CPE": 12345,
+  "Email": "lucas@test.com1",
+  "Age": 24,
+  "Active": true
 }
 
 ### PUT
