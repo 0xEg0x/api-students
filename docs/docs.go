@@ -30,17 +30,23 @@ const docTemplate = `{
                 "summary": "Get a list of students",
                 "parameters": [
                     {
-                        "type": "integer",
-                        "description": "Registration",
-                        "name": "register",
-                        "in": "path"
+                        "type": "boolean",
+                        "description": "Filter by active students",
+                        "name": "active",
+                        "in": "query"
                     }
                 ],
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/schemas.StudentResponse"
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/definitions/schemas.StudentResponse"
+                                }
+                            }
                         }
                     },
                     "404": {
@@ -49,7 +55,7 @@ const docTemplate = `{
                 }
             },
             "post": {
-                "description": "Create student",
+                "description": "Create a new student",
                 "consumes": [
                     "application/json"
                 ],
@@ -60,6 +66,17 @@ const docTemplate = `{
                     "students"
                 ],
                 "summary": "Create student",
+                "parameters": [
+                    {
+                        "description": "Dados do estudante",
+                        "name": "student",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/api.StudentRequest"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -86,6 +103,15 @@ const docTemplate = `{
                     "students"
                 ],
                 "summary": "Get student by ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Student ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -112,7 +138,25 @@ const docTemplate = `{
                 "tags": [
                     "students"
                 ],
-                "summary": "Update Student",
+                "summary": "Update student",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Student ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Updated student data",
+                        "name": "student",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/schemas.Student"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -129,7 +173,7 @@ const docTemplate = `{
                 }
             },
             "delete": {
-                "description": "Delete student details",
+                "description": "Delete student by ID",
                 "consumes": [
                     "application/json"
                 ],
@@ -139,7 +183,16 @@ const docTemplate = `{
                 "tags": [
                     "students"
                 ],
-                "summary": "Delete Student",
+                "summary": "Delete student",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Student ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -158,6 +211,29 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "api.StudentRequest": {
+            "type": "object",
+            "properties": {
+                "Active": {
+                    "type": "boolean"
+                },
+                "Age": {
+                    "type": "integer"
+                },
+                "CPF": {
+                    "type": "integer"
+                },
+                "Email": {
+                    "type": "string"
+                },
+                "Name": {
+                    "type": "string"
+                }
+            }
+        },
+        "schemas.Student": {
+            "type": "object"
+        },
         "schemas.StudentResponse": {
             "type": "object",
             "properties": {
