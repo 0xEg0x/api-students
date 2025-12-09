@@ -13,7 +13,6 @@ func main() {
 
 	if err := server.Start(); err != nil {
 		log.Fatal().Err(err).Msg("failed start server")
-
 	}
 
 }
