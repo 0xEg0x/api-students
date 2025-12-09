@@ -7,6 +7,7 @@ import (
 
 	"github.com/0xEg0x/api-students/schemas"
 	"github.com/labstack/echo/v4"
+	"github.com/rs/zerolog/log"
 	"gorm.io/gorm"
 )
 
@@ -38,9 +39,22 @@ func (api *API) getStudent(c echo.Context) error {
 }
 
 func (api *API) createStudent(c echo.Context) error {
-	student := schemas.Student{}
-	if err := c.Bind(&student); err != nil {
+	studentReq := StudentRequest{}
+	if err := c.Bind(&studentReq); err != nil {
 		return err
+	}
+
+	if err := studentReq.Validate(); err != nil {
+		log.Error().Err(err).Msgf("[api] error validating struct")
+		return c.String(http.StatusBadRequest, "error validating student")
+	}
+
+	student := schemas.Student{
+		Name:   studentReq.Name,
+		Email:  studentReq.Email,
+		CPF:    studentReq.CPF,
+		Age:    studentReq.Age,
+		Active: *studentReq.Active,
 	}
 
 	if err := api.DB.AddStudente(student); err != nil {
