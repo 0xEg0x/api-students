@@ -45,8 +45,8 @@ func (api *API) Start() error {
 	// Start server
 	if err := api.Echo.Start(":8080"); err != nil && !errors.Is(err, http.ErrServerClosed) {
 		slog.Error("failed to start server", "error", err)
-		return err // 🔥 retorna o erro para o caller
+		return err
 	}
 
-	return nil // servidor foi encerrado corretamente
+	return nil
 }
